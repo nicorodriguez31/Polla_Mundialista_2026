@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mundial 2026 Pro</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-badge">⚽</div>
+        <div>
+          <h1>Mundial 2026 Pro</h1>
+          <p>Resultados, quiniela y ranking</p>
+        </div>
+      </div>
+
+      <nav class="menu">
+        <button class="menu-btn active" data-view="dashboard">Dashboard</button>
+        <button class="menu-btn" data-view="matches">Resultados</button>
+        <button class="menu-btn" data-view="groups">Grupos</button>
+        <button class="menu-btn" data-view="players">Participantes</button>
+        <button class="menu-btn" data-view="predictions">Pronósticos</button>
+        <button class="menu-btn" data-view="leaderboard">Ranking</button>
+        <button class="menu-btn" data-view="settings">Ajustes</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="exportBackupBtn" class="ghost-btn">Exportar respaldo</button>
+        <label class="ghost-btn import-label">
+          Importar respaldo
+          <input id="importBackupInput" type="file" accept=".json" hidden />
+        </label>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">App web estática</p>
+          <h2 id="viewTitle">Dashboard</h2>
+        </div>
+        <div class="top-actions">
+          <button id="seedBtn" class="secondary-btn">Cargar demo</button>
+          <button id="resetBtn" class="danger-btn">Reiniciar todo</button>
+        </div>
+      </header>
+
+      <section id="dashboardView" class="view active">
+        <div class="cards" id="dashboardCards"></div>
+
+        <div class="grid-2">
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Últimos partidos cargados</h3>
+            </div>
+            <div id="recentMatches"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Top participantes</h3>
+            </div>
+            <div id="topPlayers"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="matchesView" class="view">
+        <div class="panel">
+          <div class="toolbar">
+            <div class="filters">
+              <label>Grupo
+                <select id="matchGroupFilter"></select>
+              </label>
+              <label>Buscar
+                <input id="matchSearch" type="text" placeholder="Equipo, grupo o número" />
+              </label>
+            </div>
+          </div>
+          <div id="matchesList" class="match-grid"></div>
+        </div>
+      </section>
+
+      <section id="groupsView" class="view">
+        <div id="groupsGrid" class="group-grid"></div>
+      </section>
+
+      <section id="playersView" class="view">
+        <div class="grid-2">
+          <section class="panel">
+            <div class="panel-head"><h3>Crear participante</h3></div>
+            <form id="playerForm" class="stack-form">
+              <label>Nombre
+                <input id="playerName" type="text" placeholder="Ej: Nicolás" required />
+              </label>
+              <button class="primary-btn" type="submit">Agregar participante</button>
+            </form>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head"><h3>Participantes</h3></div>
+            <div id="playersList"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="predictionsView" class="view">
+        <div class="panel">
+          <div class="toolbar">
+            <div class="filters">
+              <label>Participante
+                <select id="predictionPlayerSelect"></select>
+              </label>
+              <label>Grupo
+                <select id="predictionGroupFilter"></select>
+              </label>
+              <label>Buscar
+                <input id="predictionSearch" type="text" placeholder="Equipo o partido" />
+              </label>
+            </div>
+          </div>
+          <div id="predictionsEmpty" class="empty-state">Primero crea al menos un participante.</div>
+          <div id="predictionsList" class="match-grid"></div>
+        </div>
+      </section>
+
+      <section id="leaderboardView" class="view">
+        <div class="grid-2">
+          <section class="panel">
+            <div class="panel-head"><h3>Ranking</h3></div>
+            <div id="leaderboardTable"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h3>Detalle de puntos</h3></div>
+            <div id="leaderboardDetail" class="muted-block">Selecciona un participante para ver cómo sumó puntos.</div>
+          </section>
+        </div>
+      </section>
+
+      <section id="settingsView" class="view">
+        <div class="grid-2">
+          <section class="panel">
+            <div class="panel-head"><h3>Sistema de puntos</h3></div>
+            <form id="scoringForm" class="stack-form">
+              <label>Marcador exacto
+                <input id="exactPoints" type="number" min="0" step="1" />
+              </label>
+              <label>Acertar ganador/empate
+                <input id="outcomePoints" type="number" min="0" step="1" />
+              </label>
+              <button class="primary-btn" type="submit">Guardar sistema</button>
+            </form>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h3>Qué trae esta versión</h3></div>
+            <ul class="feature-list">
+              <li>Resultados oficiales por partido</li>
+              <li>Tabla automática por grupo</li>
+              <li>Participantes ilimitados</li>
+              <li>Pronósticos por participante</li>
+              <li>Ranking con puntos automáticos</li>
+              <li>Respaldo e importación en JSON</li>
+              <li>Modo demo para probar rápido</li>
+            </ul>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
